@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acrobatic plane show flyer</title>
+<link rel="stylesheet" href="../_fonts/fonts.css">
+<style>
+  @page { size: 105mm 148mm; margin: 0; }
+  :root {
+    --bg: #fbf3e0;
+    --text: #1d2b3a;
+    --muted: #5b6b7a;
+    --dark: #12263f;
+    --on-dark: #fff8e8;
+    --light: #f4e6c3;
+    --line: #d9c79a;
+    --accent: #e8512b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: #c9ced6;
+    font-family: var(--f4, 'Lato', sans-serif);
+    color: var(--text);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page {
+    position: relative;
+    width: 105mm;
+    height: 148mm;
+    margin: 20px auto;
+    background: var(--bg);
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0,0,0,.25);
+  }
+  @media print {
+    body { background: none; }
+    .page { margin: 0; box-shadow: none; }
+  }
+
+  .sky {
+    position: absolute; left: 0; top: 0; width: 105mm; height: 92mm;
+    background: linear-gradient(180deg, #2a64a0 0%, #5a9bcb 55%, #cfe6f3 100%);
+  }
+  .sky svg.art { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+
+  .head { position: absolute; left: 0; right: 0; top: 16px; text-align: center; padding: 0 16px; }
+  .kicker {
+    font-family: var(--f2, 'Caveat', cursive);
+    font-size: calc(24px * var(--s2, 1));
+    color: var(--c2, #ffd98a);
+    line-height: 1;
+    margin: 0 0 4px;
+  }
+  h1 {
+    font-family: var(--f1, 'DM Serif Display', serif);
+    font-weight: 400;
+    font-size: calc(40px * var(--s1, 1));
+    line-height: 1;
+    color: var(--c1, var(--on-dark));
+    margin: 0;
+    text-shadow: 0 2px 0 rgba(18,38,63,.35);
+  }
+
+  .panel {
+    position: absolute; left: 0; right: 0; top: 92mm; bottom: 0;
+    padding: 12px 20px 10px;
+    background: var(--bg);
+    text-align: center;
+  }
+  .panel::before {
+    content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 5px;
+    background: repeating-linear-gradient(90deg, var(--accent) 0 14px, var(--bg) 14px 28px);
+  }
+  .lead {
+    font-family: var(--f3, 'Josefin Sans', sans-serif);
+    font-weight: 700;
+    font-size: calc(15px * var(--s3, 1));
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--c3, var(--accent));
+    margin: 8px 0 5px;
+  }
+  .body {
+    font-family: var(--f4, 'Lato', sans-serif);
+    font-size: calc(11px * var(--s4, 1));
+    line-height: 1.45;
+    color: var(--c4, var(--text));
+    margin: 0 0 9px;
+  }
+  .details {
+    display: flex; gap: 6px; justify-content: center; margin-bottom: 7px;
+  }
+  .box {
+    flex: 1; background: var(--dark); color: var(--on-dark);
+    border-radius: 6px; padding: 5px 4px 6px;
+  }
+  .box .label {
+    font-family: var(--f2, 'Josefin Sans', sans-serif);
+    font-size: calc(9px * var(--s2, 1));
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--c2, #ffd98a);
+    display: block; margin-bottom: 2px;
+  }
+  .box .value {
+    font-family: var(--f4, 'Lato', sans-serif);
+    font-weight: 700;
+    font-size: calc(12px * var(--s4, 1));
+  }
+  .small {
+    font-family: var(--f5, 'Lato', sans-serif);
+    font-size: calc(9.5px * var(--s5, 1));
+    color: var(--c5, var(--muted));
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="sky">
+    <svg class="art" viewBox="0 0 397 348" preserveAspectRatio="none" aria-hidden="true">
+      <!-- sun -->
+      <circle cx="68" cy="205" r="34" fill="#ffe8a8" opacity=".85"/>
+      <circle cx="68" cy="205" r="50" fill="#ffe8a8" opacity=".25"/>
+      <!-- clouds -->
+      <g fill="#ffffff" opacity=".92">
+        <g transform="translate(300 262)"><ellipse cx="0" cy="0" rx="34" ry="11"/><ellipse cx="-12" cy="-9" rx="17" ry="12"/><ellipse cx="10" cy="-12" rx="20" ry="14"/></g>
+        <g transform="translate(70 308)"><ellipse cx="0" cy="0" rx="44" ry="13"/><ellipse cx="-14" cy="-10" rx="20" ry="14"/><ellipse cx="14" cy="-14" rx="24" ry="17"/></g>
+        <g transform="translate(345 325)" opacity=".8"><ellipse cx="0" cy="0" rx="40" ry="11"/><ellipse cx="-8" cy="-9" rx="18" ry="12"/></g>
+      </g>
+      <!-- smoke trail with a loop -->
+      <g transform="translate(0 18)">
+        <path d="M-10 290 C 70 292, 130 278, 172 248 C 222 212, 262 160, 226 150 C 190 140, 172 192, 208 222 C 244 252, 300 226, 338 190"
+              fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" opacity=".9"/>
+        <path d="M-10 290 C 70 292, 130 278, 172 248 C 222 212, 262 160, 226 150 C 190 140, 172 192, 208 222 C 244 252, 300 226, 338 190"
+              fill="none" stroke="#e8512b" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 9" opacity=".9"/>
+        <!-- biplane, nose to the right -->
+        <g transform="translate(346 184) rotate(-35) scale(1.15)">
+          <path d="M-34 0 L-27 -6 L20 -9 Q34 -8 37 0 Q34 8 20 9 L-27 5 Z" fill="#e8512b" stroke="#12263f" stroke-width="1.5"/>
+          <path d="M-34 0 L-41 -17 L-27 -4 Z" fill="#12263f"/>
+          <rect x="-41" y="-1.5" width="15" height="3.2" rx="1.5" fill="#12263f"/>
+          <line x1="-8" y1="-19" x2="-8" y2="13" stroke="#12263f" stroke-width="1.6"/>
+          <line x1="10" y1="-19" x2="10" y2="13" stroke="#12263f" stroke-width="1.6"/>
+          <rect x="-16" y="-25" width="34" height="6.5" rx="3.2" fill="#fff8e8" stroke="#12263f" stroke-width="1.5"/>
+          <rect x="-14" y="12" width="30" height="6.5" rx="3.2" fill="#fff8e8" stroke="#12263f" stroke-width="1.5"/>
+          <circle cx="4" cy="-8" r="5" fill="#9fd0ea" stroke="#12263f" stroke-width="1.2"/>
+          <circle cx="37" cy="0" r="2.5" fill="#12263f"/>
+          <rect x="37" y="-15" width="3" height="30" rx="1.5" fill="#12263f" opacity=".8"/>
+          <line x1="14" y1="18" x2="16" y2="26" stroke="#12263f" stroke-width="1.6"/>
+          <circle cx="16" cy="27" r="4" fill="#12263f"/>
+        </g>
+      </g>
+    </svg>
+    <div class="head">
+      <p class="kicker">Come and watch the sky</p>
+      <h1>Small Planes,<br>Big Acrobatics</h1>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p class="lead">Wings, loops and open sky</p>
+    <p class="body">Watch our small planes roll, dive and dance above you, flown by pilots who make the impossible look easy. Bring the whole family, a cap for the sun, and a good spot to look up from.</p>
+    <div class="details">
+      <div class="box"><span class="label">Date</span><span class="value">[date]</span></div>
+      <div class="box"><span class="label">Time</span><span class="value">[time]</span></div>
+      <div class="box"><span class="label">Place</span><span class="value">[place]</span></div>
+    </div>
+    <p class="small">[free entrance or ticket price] · [contact or website]</p>
+  </div>
+</div>
+</body>
+</html>
