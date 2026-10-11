@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coming soon</title>
+<link rel="stylesheet" href="_fonts/fonts.css">
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #F6F8F6; color: #1C2826; font: 18px/1.6 'Lato', system-ui, sans-serif; text-align: center; padding: 24px; }
+  h1 { font: 600 clamp(34px, 6vw, 56px)/1.15 'Playfair Display', Georgia, serif; margin: 0 0 10px; color: #2E5450; }
+  p { margin: 0; color: #5D6664; }
+  .owner { margin-top: 40px; font-size: 14px; }
+  .owner a { color: #2E5450; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Coming soon</h1>
+  <p>A new website is being made here.</p>
+  <p class="owner" id="owner" hidden>Is this your new site? <a id="connect" href="#">Connect it to Vagabond Studio</a></p>
+</main>
+<script>
+// Only on the free Cloudflare address, right after "Deploy to Cloudflare": lets the owner connect the site to the Studio.
+fetch('/_studio/hello').then(function (r) { return r.json(); }).then(function (h) {
+  if (!h.studio || !/\.(workers|pages)\.dev$/.test(location.hostname)) return;
+  document.getElementById('connect').href = h.studioUrl + '/space/connect?host=' + encodeURIComponent(location.host);
+  document.getElementById('owner').hidden = false;
+}).catch(function () {});
+</script>
+</body>
+</html>

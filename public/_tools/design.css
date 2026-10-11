@@ -1,0 +1,147 @@
+/* Vagabond Studio font and colour switcher panel (test site only), from the vagabondhaven.com switcher of 9 October 2026.
+   The --ds-* values are set once on #ds by design.js from this site's own fonts and colours AS BUILT, so the panel
+   has the site's look (its brand) but never changes with the design being tested. Every rule starts with #ds. */
+#ds { display: contents; }
+      #ds .ds-open, #ds .ds-panel, #ds .ds-picker, #ds .ds-mark-none, #ds .ds-panel *, #ds .ds-picker * {
+        font-family: var(--ds-font); font-style: normal; font-weight: 500; letter-spacing: normal; text-transform: none; line-height: 1.4;
+        font-variant-numeric: lining-nums tabular-nums; text-wrap: wrap; box-sizing: border-box; text-align: left; text-shadow: none; }
+      #ds :focus-visible { outline: 2px solid var(--ds-accent); outline-offset: 2px; }
+      #ds .ds-open { position: fixed; left: 12px; top: 50%; transform: translateY(-50%); z-index: 9998; width: 46px; height: 46px; border-radius: 50%;
+        border: 2px solid var(--ds-on-dark); background: var(--ds-dark); color: var(--ds-on-dark); font-size: 17px; font-weight: 600; line-height: 1; text-align: center;
+        cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,.28); padding: 0; }
+      #ds .ds-open:hover { background: var(--ds-dark-2); }
+      #ds .ds-panel, #ds .ds-picker { position: fixed; z-index: 10001; background: var(--ds-bg); color: var(--ds-text); border: 1px solid var(--ds-line);
+        border-radius: 18px; box-shadow: 0 18px 50px rgba(0,0,0,.22), 0 2px 8px rgba(0,0,0,.10); font-size: 13.5px; }
+      #ds .ds-panel { left: 12px; top: 12px; bottom: 12px; width: 372px; display: flex; flex-direction: column; overflow: hidden; outline: none; }
+      #ds .ds-panel[hidden], #ds .ds-picker[hidden], #ds [hidden] { display: none; }
+      #ds .ds-grab { display: none; }
+      #ds .ds-head { display: flex; align-items: center; gap: 8px; background: var(--ds-dark); color: var(--ds-on-dark); padding: 12px 12px 12px 18px; flex: none; }
+      #ds .ds-title { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+      #ds .ds-head strong { font-size: 17px; font-weight: 600; color: var(--ds-on-dark); }
+      #ds .ds-note { font-family: var(--ds-font); font-size: 10.5px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--ds-on-dark-2); }
+      #ds .ds-x { border: 0; background: none; font-size: 24px; line-height: 1; cursor: pointer; color: inherit; padding: 2px 6px; border-radius: 8px; text-align: center; }
+      #ds .ds-head .ds-x:hover { background: rgba(255,255,255,.12); }
+      #ds .ds-tools { display: grid; grid-template-columns: auto auto 1fr; gap: 6px; padding: 10px 14px; background: var(--ds-light); border-bottom: 1px solid var(--ds-line); flex: none; }
+      #ds .ds-tb { border: 1px solid var(--ds-line); background: var(--ds-bg); color: var(--ds-text); border-radius: 999px; padding: 6px 11px; font-size: 12.5px; font-weight: 600; cursor: pointer; white-space: nowrap; text-align: center; }
+      #ds .ds-tb:hover:not(:disabled) { border-color: var(--ds-dark); }
+      #ds .ds-tb:disabled { opacity: .45; cursor: default; }
+      #ds .ds-hold { background: var(--ds-dark); border-color: var(--ds-dark); color: var(--ds-on-dark); touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; overflow: hidden; text-overflow: ellipsis; }
+      #ds .ds-hold.on { background: var(--ds-accent); border-color: var(--ds-accent); color: var(--ds-on-accent); }
+      /* While "Hold to see as built" is pressed, the panel body steps aside so more of the page shows (sizes stay, so the button stays under the finger). */
+      #ds .ds-panel.is-holding { background: transparent; border-color: transparent; box-shadow: none; }
+      #ds .ds-panel.is-holding .ds-body { visibility: hidden; }
+      #ds .ds-body { flex: 1; min-height: 0; overflow: auto; padding: 12px 12px 14px; overscroll-behavior: contain; }
+      #ds .ds-sec { background: var(--ds-light); border-radius: 14px; padding: 4px 12px 10px; margin: 0 0 10px; }
+      #ds .ds-sec summary { font-family: var(--ds-font); font-weight: 500; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ds-dark); cursor: pointer; padding: 9px 0 8px; list-style-position: inside; }
+      #ds .ds-panel select, #ds .ds-panel input:not([type=range]):not([type=color]):not([type=checkbox]) { width: 100%; padding: 6px 9px; font-size: 13px; font-weight: 500; color: var(--ds-text); background: var(--ds-white); border: 1px solid var(--ds-line); border-radius: 10px; margin-top: 3px; height: auto; min-height: 0; box-shadow: none; }
+      #ds .ds-b { padding: 8px 14px; border-radius: 999px; border: 0; background: var(--ds-accent); color: var(--ds-on-accent); cursor: pointer; font-size: 13px; font-weight: 600; white-space: nowrap; text-align: center; }
+      #ds .ds-b:hover { background: var(--ds-accent-2); }
+      #ds .ds-b:disabled { opacity: .4; cursor: default; }
+      #ds .ds-saveas { display: grid; grid-template-columns: 1fr auto; gap: 6px; margin: 8px 0 2px; align-items: center; }
+      #ds .ds-saveas input { margin-top: 0; }
+      #ds .ds-ab { display: grid; grid-template-columns: auto 1fr 1fr; gap: 6px; align-items: center; }
+      #ds .ds-ab > span { font-family: var(--ds-font); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ds-muted); }
+      #ds .ds-ab .ds-flip { grid-column: 1 / -1; background: var(--ds-dark); }
+      #ds .ds-ab .ds-flip:hover { background: var(--ds-dark-2); }
+      /* Preset pickers: the chosen set as a button, the list as small cards. */
+      #ds .ds-qp { position: relative; margin: 0 0 10px; }
+      #ds .ds-qpbtn { display: flex; align-items: center; gap: 10px; width: 100%; padding: 7px 30px 7px 8px; border: 1px solid var(--ds-line); border-radius: 12px; background: var(--ds-white); color: var(--ds-text); font-size: 13px; font-weight: 600; cursor: pointer; position: relative; min-height: 44px; }
+      #ds .ds-qpbtn::after { content: "▾"; position: absolute; right: 11px; top: 50%; transform: translateY(-50%); color: var(--ds-muted); font-family: system-ui, sans-serif; }
+      #ds .ds-qplist { position: absolute; left: -6px; right: -6px; top: calc(100% + 4px); z-index: 3; background: var(--ds-bg); border: 1px solid var(--ds-line); border-radius: 14px; box-shadow: 0 14px 34px rgba(0,0,0,.22); max-height: min(420px, 60vh); overflow: auto; padding: 6px; }
+      #ds .ds-qpg { font-family: var(--ds-font); font-size: 10.5px; font-weight: 500; color: var(--ds-muted); padding: 8px 6px 4px; text-transform: uppercase; letter-spacing: .12em; }
+      #ds .ds-qpi { display: flex; align-items: center; gap: 10px; padding: 6px 8px; margin: 0 0 4px; font-size: 13px; cursor: pointer; background: var(--ds-white); border: 1px solid transparent; border-radius: 12px; }
+      #ds .ds-qpi:hover, #ds .ds-qpi:focus-visible { border-color: var(--ds-light-2); background: var(--ds-white); }
+      #ds .ds-qpi.on { border-color: var(--ds-accent); box-shadow: inset 0 0 0 1px var(--ds-accent); }
+      #ds .ds-qpn { flex: 1; min-width: 0; font-size: 13px; font-weight: 500; }
+      #ds .ds-qpbtn .ds-qpn { font-weight: 600; }
+      #ds .ds-smp { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 58px; height: 38px; border-radius: 9px; background: var(--ds-light); color: var(--ds-text); overflow: hidden; }
+      #ds .ds-smpf b { font-size: 22px; font-weight: 600; line-height: 1; }
+      #ds .ds-smpf i { font-size: 14px; font-weight: 400; line-height: 1; margin-left: 4px; align-self: flex-end; padding-bottom: 9px; }
+      #ds .ds-smpc { gap: 0; background: var(--ds-white); border: 1px solid var(--ds-line); padding: 0 4px; }
+      #ds .ds-smpc i { width: 14px; height: 14px; border-radius: 50%; margin-left: -3px; border: 1.5px solid var(--ds-white); box-shadow: 0 0 0 .5px rgba(0,0,0,.18); }
+      #ds .ds-smpc i:first-child { margin-left: 0; }
+      #ds .ds-qpnone { font-size: 12px; color: var(--ds-muted); padding: 2px 6px 8px; }
+      #ds .ds-rm { border: 0; background: none; color: var(--ds-muted); font-size: 17px; line-height: 1; cursor: pointer; padding: 2px 6px; border-radius: 6px; }
+      #ds .ds-rm:hover { color: #A3261B; background: #F6E1DC; }
+      #ds .ds-rm.sure { font-size: 11px; color: #fff; background: #A3261B; padding: 4px 7px; }
+      #ds .ds-msg { color: var(--ds-dark); font-size: 12.5px; font-weight: 600; margin: 4px 2px 0; min-height: 1em; }
+      /* Text types and colours */
+      #ds .ds-role { background: var(--ds-bg); border: 1px solid var(--ds-line); border-radius: 12px; padding: 10px; margin-bottom: 8px; }
+      #ds .ds-all { background: var(--ds-white); }
+      #ds .ds-rh { font-family: var(--ds-font); font-weight: 500; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ds-dark); margin-bottom: 7px; }
+      #ds .ds-sub { display: block; font-family: var(--ds-font); font-weight: 500; font-size: 11.5px; letter-spacing: normal; text-transform: none; color: var(--ds-muted); margin: 2px 0 0; }
+      #ds .ds-font { width: 100%; padding: 7px 28px 7px 10px; border: 1px solid var(--ds-line); border-radius: 10px; background: var(--ds-white); font-size: 17px; font-weight: 400; cursor: pointer; color: var(--ds-text); position: relative; }
+      #ds .ds-font::after { content: "▾"; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-family: system-ui, sans-serif; font-size: 13px; color: var(--ds-muted); }
+      #ds .ds-font.is-design { color: var(--ds-muted); }
+      #ds .ds-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 8px; margin-top: 8px; }
+      #ds .ds-grid label, #ds .ds-f { font-size: 11.5px; color: var(--ds-muted); display: block; font-weight: 500; }
+      #ds .ds-fl { display: flex; justify-content: space-between; align-items: center; gap: 4px; font-size: 11.5px; color: var(--ds-muted); }
+      #ds .ds-f small { display: block; font-size: 10.5px; color: var(--ds-muted); opacity: .85; margin-top: 2px; }
+      #ds .ds-rs { border: 0; background: none; color: var(--ds-accent-2); font-size: 10.5px; font-weight: 600; cursor: pointer; padding: 0; }
+      #ds .ds-f.is-set input, #ds .ds-f.is-set select { border-color: var(--ds-accent); box-shadow: inset 0 0 0 1px var(--ds-accent); }
+      #ds .ds-grid input.is-design { color: var(--ds-muted); }
+      #ds .ds-grid .ds-chk { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ds-text); padding-top: 16px; }
+      #ds .ds-chk input { accent-color: var(--ds-accent); }
+      #ds .ds-tc, #ds .ds-c { display: grid; gap: 8px; align-items: center; font-size: 12.5px; }
+      #ds .ds-tc { grid-template-columns: 30px 1fr auto; margin-top: 9px; }
+      #ds .ds-c { grid-template-columns: 30px 1fr auto auto; padding: 3px 0; }
+      #ds .ds-tc input[type=color], #ds .ds-c input[type=color] { width: 30px; height: 26px; padding: 0; border: 1px solid var(--ds-line); border-radius: 8px; background: none; cursor: pointer; overflow: hidden; }
+      #ds :is(.ds-tc, .ds-c) em { font-family: var(--ds-font); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ds-muted); }
+      #ds .ds-auto { font-size: 11px; font-weight: 600; border: 1px solid var(--ds-accent); background: var(--ds-white); border-radius: 999px; cursor: pointer; padding: 2px 8px; color: var(--ds-accent-2); }
+      #ds .ds-auto::after { content: " ↺"; }
+      #ds .ds-eye { border: 0; background: none; cursor: pointer; font-size: 15px; color: var(--ds-dark); padding: 0 2px; touch-action: none; user-select: none; -webkit-user-select: none; }
+      #ds .ds-hint { font-size: 11.5px; color: var(--ds-muted); margin: 6px 0 0; }
+      #ds .ds-warn { background: var(--ds-white); border: 1px solid var(--ds-line); border-radius: 12px; padding: 8px 10px; margin-top: 8px; }
+      #ds .ds-warn:empty { display: none; }
+      #ds .ds-warn p { margin: 0 0 4px; font-size: 12px; color: var(--ds-accent-2); }
+      #ds .ds-warn p:last-child { margin-bottom: 0; }
+      #ds .ds-warn p.ok { color: var(--ds-dark); }
+      #ds .ds-actions { margin-top: 10px; }
+      #ds .ds-actions .ds-b { width: 100%; padding: 10px 14px; font-size: 14px; }
+      /* Font picker */
+      #ds .ds-picker { left: 396px; top: 12px; bottom: 12px; width: 340px; display: flex; flex-direction: column; padding: 12px; }
+      #ds .ds-ph { display: flex; gap: 6px; align-items: center; }
+      #ds .ds-picker .ds-search { flex: 1; padding: 8px 11px; font-size: 14px; border: 1px solid var(--ds-line); border-radius: 999px; color: var(--ds-text); background: var(--ds-white); }
+      #ds .ds-picker .ds-x { color: var(--ds-text); }
+      #ds .ds-cats { display: flex; flex-wrap: wrap; gap: 4px; margin: 10px 0; }
+      #ds .ds-cats button { border: 1px solid var(--ds-line); background: var(--ds-white); border-radius: 999px; padding: 3px 10px; font-family: var(--ds-font); font-size: 12px; cursor: pointer; color: var(--ds-text); }
+      #ds .ds-cats button.on { background: var(--ds-dark); color: var(--ds-on-dark); border-color: var(--ds-dark); }
+      #ds .ds-flist { overflow: auto; flex: 1; background: var(--ds-white); border: 1px solid var(--ds-line); border-radius: 12px; }
+      #ds .ds-fi { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; width: 100%; border: 0; border-bottom: 1px solid var(--ds-light); background: var(--ds-white); padding: 9px 10px; font-size: 19px; font-weight: 400; cursor: pointer; color: var(--ds-text); }
+      #ds .ds-fi:hover { background: var(--ds-bg); }
+      #ds .ds-fi small { font-family: var(--ds-font); font-size: 10.5px; letter-spacing: .06em; color: var(--ds-muted); white-space: nowrap; }
+      #ds .ds-more { width: 100%; padding: 9px; border: 1px dashed var(--ds-line); background: var(--ds-bg); cursor: pointer; margin-top: 6px; border-radius: 10px; text-align: center; }
+      #ds .ds-marks { position: fixed; inset: 0; pointer-events: none; z-index: 10000; }
+      #ds .ds-mark { position: fixed; outline: 3px solid #ff2d55; outline-offset: -1px; background: rgba(255,45,85,.12); border-radius: 2px; }
+      #ds .ds-mark-none { position: fixed; left: 50%; top: 20px; transform: translateX(-50%); background: var(--ds-dark); color: var(--ds-on-dark); padding: 7px 12px; border-radius: 999px; font-size: 13px; }
+      @media (max-width: 760px) {
+        #ds .ds-open { top: auto; bottom: 150px; transform: none; left: 10px; width: 42px; height: 42px; font-size: 16px; }
+      }
+      /* Phones: a bottom sheet that slides up (at most 70% of the screen), with a handle to drag it down. */
+      @media (max-width: 639px) {
+        #ds .ds-panel { left: 0; right: 0; top: auto; bottom: 0; width: auto; max-height: 70vh; max-height: 70dvh; border-radius: 20px 20px 0 0; border-bottom: 0;
+          animation: ds-up .26s ease-out; transition: transform .2s ease; padding-bottom: env(safe-area-inset-bottom); }
+        #ds .ds-panel.is-dragging { transition: none; }
+        #ds .ds-grab { display: flex; justify-content: center; background: var(--ds-dark); padding: 8px 0 0; touch-action: none; cursor: grab; flex: none; }
+        #ds .ds-grab span { width: 40px; height: 4px; border-radius: 4px; background: var(--ds-on-dark); opacity: .6; }
+        #ds .ds-head { padding-top: 6px; touch-action: none; }
+        #ds .ds-tools { grid-template-columns: auto auto 1fr; padding: 8px 10px; }
+        #ds .ds-body { padding: 10px 10px 14px; }
+        #ds .ds-picker { left: 0; right: 0; top: 8vh; bottom: 0; width: auto; border-radius: 20px 20px 0 0; z-index: 10002; }
+      }
+      @keyframes ds-up { from { transform: translateY(100%); } to { transform: none; } }
+      @media (prefers-reduced-motion: reduce) { #ds .ds-panel { animation: none; transition: none; } }
+    
+/* Vagabond Studio additions: text types as foldable cards, the "Use this design" button */
+#ds .ds-role { padding: 0 10px; }
+#ds .ds-role > summary { display: flex; justify-content: space-between; align-items: center; gap: 8px; cursor: pointer; padding: 9px 0; list-style: none; }
+#ds .ds-role > summary::-webkit-details-marker { display: none; }
+#ds .ds-role > summary span { font-weight: 600; font-size: 13px; color: var(--ds-dark); }
+#ds .ds-role > summary em { font-size: 11.5px; color: var(--ds-muted); }
+#ds .ds-role[open] { padding-bottom: 10px; }
+#ds .ds-rh { margin-bottom: 7px; }
+#ds .ds-all { border: 1px solid var(--ds-line); border-radius: 12px; padding: 10px; margin-bottom: 8px; }
+#ds .ds-grid select, #ds .ds-grid input { margin-top: 3px; }
+#ds .ds-actions { display: grid; gap: 8px; }
+#ds .ds-actions .ds-reset { background: var(--ds-white); color: var(--ds-text); border: 1px solid var(--ds-line); }
+#ds .ds-actions .ds-reset:hover { background: var(--ds-light); }

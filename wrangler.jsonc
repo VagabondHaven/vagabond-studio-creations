@@ -1,0 +1,24 @@
+// Settings for Cloudflare. The "Deploy to Cloudflare" button reads this file: it creates the Worker, the storage for
+// comments (KV, binding COMMENTS) and connects your GitHub repository, so every new version goes online by itself.
+{
+  "name": "vagabond-studio-creations",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-06-01",
+  // The free address <name>.<your-account>.workers.dev. Cloudflare sometimes leaves it switched off for new
+  // sites; this switches it on at every deploy, so the site is always reachable there.
+  "workers_dev": true,
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    // Only these addresses run the Worker (the lock for the developer site and the small APIs). Everything else is
+    // served straight from public/ (free and unlimited on Cloudflare).
+    "run_worker_first": ["/_dev", "/_dev/*", "/api/*", "/_pass", "/_studio/*"]
+  },
+  "kv_namespaces": [{ "binding": "COMMENTS","id": "a1230605e32f483c84183bccfcd18088" }],
+  "vars": {
+    // "true" opens the developer site without a pass, for example when you only work with your own Claude.
+    "DEV_OPEN": "false"
+  },
+  "observability": { "enabled": true }
+}

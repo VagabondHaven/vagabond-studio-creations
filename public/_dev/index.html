@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>My creations</title>
+<link rel="stylesheet" href="../_fonts/fonts.css">
+<style>
+  :root { --bg: #F6F8F6; --text: #1C2826; --muted: #5D6664; --dark: #2E5450; --on-dark: #C4CFCC; --light: #DFE9E6; --line: #C2CCC9; --accent: #A9653F; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--c4, var(--text)); font-family: var(--f4, 'Lato', system-ui, sans-serif); font-size: calc(17px * var(--s4, 1)); line-height: 1.55; }
+  header { background: var(--dark); color: var(--on-dark); padding: 34px 20px 30px; }
+  header .in, main { max-width: 1120px; margin: 0 auto; }
+  h1 { margin: 0; font-family: var(--f1, 'Playfair Display', Georgia, serif); font-size: calc(clamp(30px, 4vw, 42px) * var(--s1, 1)); font-weight: 600; color: var(--c-light, #fff); }
+  header p { margin: 8px 0 0; font-family: var(--f3, 'Lato', system-ui, sans-serif); font-size: calc(17px * var(--s3, 1)); color: var(--c-light, var(--on-dark)); max-width: 60ch; }
+  main { padding: 26px 20px 60px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; }
+  .thumb { position: relative; height: 200px; background: var(--light); overflow: hidden; display: block; }
+  .thumb iframe { position: absolute; top: 0; left: 0; width: 400%; height: 400%; transform: scale(.25); transform-origin: 0 0; border: 0; pointer-events: none; background: #fff; }
+  .body { padding: 14px 16px 16px; display: grid; gap: 4px; }
+  .body p { margin: 0; }
+  h2 { margin: 0; font-family: var(--f2, 'Lato', system-ui, sans-serif); font-size: calc(19px * var(--s2, 1)); font-weight: 700; color: var(--c2, var(--dark)); }
+  .meta, .status, .empty, footer { font-family: var(--f5, 'Lato', system-ui, sans-serif); font-size: calc(14px * var(--s5, 1)); color: var(--c5, var(--muted)); }
+  .status.live { color: #2F6B45; }
+  .acts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .btn { font-family: var(--f7, 'Lato', system-ui, sans-serif); font-size: calc(14.5px * var(--s7, 1)); font-weight: 600; border-radius: 999px; padding: 7px 15px; border: 1.5px solid var(--dark); background: #fff; color: var(--dark); text-decoration: none; cursor: pointer; }
+  .btn.main { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .ren { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .ren input { flex: 1 1 100%; min-width: 0; font-family: var(--f4, 'Lato', system-ui, sans-serif); font-size: calc(17px * var(--s4, 1)); padding: 6px 10px; border: 1.5px solid var(--dark); border-radius: 10px; color: var(--text); }
+  .empty { background: #fff; border: 1.5px dashed var(--line); border-radius: 18px; padding: 28px; max-width: 640px; }
+  .empty a { color: var(--dark); }
+  footer { max-width: 1120px; margin: 0 auto; padding: 0 20px 40px; }
+</style>
+</head>
+<body>
+<header><div class="in"><h1>My creations</h1><p>Your developer site: only you can see it. Open a creation to comment on it, swap pictures, try fonts and colours, print it, save it as a PDF, or publish it on your live site for everyone.</p></div></header>
+<main><div class="grid" id="grid"></div></main>
+<footer><p id="foot"></p></footer>
+<script>
+(function () {
+  var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var day = function (s) { return s ? new Date(s).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }) : ''; };
+  var studio = 'https://studio.vagabondhaven.com';
+  function toast(t) { var d = document.createElement('div'); d.className = 'vs-toast'; d.textContent = t; document.body.appendChild(d); setTimeout(function () { d.remove(); }, 9000); }
+  fetch('/_studio/hello').then(function (r) { return r.json(); }).then(function (h) { if (h.studioUrl) studio = h.studioUrl; }).catch(function () {}).then(function () {
+    document.getElementById('foot').innerHTML = 'Create something new or change a creation: <a href="' + esc(studio) + '/#chat">back to Vagabond Studio</a>.';
+    return fetch('creations.json', { cache: 'no-store' });
+  }).then(function (r) { return r.json(); }).then(function (list) {
+    var g = document.getElementById('grid');
+    if (!list.length) { g.outerHTML = '<div class="empty"><h2>Nothing here yet</h2><p>Go back to <a href="' + esc(studio) + '/#chat">Vagabond Studio</a> and describe your first creation in the chat, for example a flyer. It appears here a minute after Claude has saved it.</p></div>'; return; }
+    g.innerHTML = list.map(function (c) {
+      var href = c.slug + '/';
+      var live = c.slug === 'website' ? '/' : '/' + c.slug + '/';
+      return '<article class="card"><a class="thumb" href="' + href + '" aria-label="Open ' + esc(c.title) + '"><iframe src="' + href + '?thumb=1" loading="lazy" tabindex="-1" title=""></iframe></a>' +
+        '<div class="body"><h2 data-slug="' + esc(c.slug) + '">' + esc(c.title || c.slug) + '</h2><p class="meta">' + esc(c.kind || '') + (c.size && c.size !== 'screen' ? ', ' + esc(c.size) : '') + ' · changed ' + day(c.updated) + '</p>' +
+        '<p class="status' + (c.published ? ' live' : '') + '">' + (c.published ? 'On the live site since ' + day(c.published) + (c.updated > c.published ? ', with newer changes not published yet' : '') : 'Not published') + '</p>' +
+        '<div class="acts"><a class="btn main" href="' + href + '">Open</a><a class="btn" href="' + esc(studio) + '/?chat=' + encodeURIComponent(c.slug) + '">Talk to Claude</a><button type="button" class="btn" data-ren="' + esc(c.slug) + '">Rename</button>' + (c.published ? '<a class="btn" href="' + live + '" target="_blank" rel="noopener">Live</a>' : '') + '</div></div></article>';
+    }).join('');
+  }).catch(function () { document.getElementById('grid').innerHTML = '<p class="empty">Could not load the list.</p>'; });
+  // Rename: only the name changes (here and in the Studio's "Chat about"); the address stays, so links keep working.
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-ren]'); if (!b) return;
+    var card = b.closest('.card'), h = card.querySelector('h2'), slug = b.dataset.ren, old = h.textContent;
+    if (card.querySelector('.ren')) return;
+    var f = document.createElement('form'); f.className = 'ren';
+    f.innerHTML = '<input aria-label="New name" maxlength="80"><button class="btn main" type="submit">Save</button><button class="btn" type="button">Cancel</button>';
+    var inp = f.querySelector('input'); inp.value = old;
+    h.hidden = true; h.after(f); inp.focus(); inp.select();
+    var done = function () { f.remove(); h.hidden = false; };
+    f.querySelector('button[type=button]').onclick = done;
+    inp.addEventListener('keydown', function (k) { if (k.key === 'Escape') done(); });
+    f.onsubmit = function (k) {
+      k.preventDefault();
+      var name = inp.value.replace(/\s+/g, ' ').trim();
+      if (!name || name === old) { done(); return; }
+      f.querySelector('button[type=submit]').disabled = true;
+      fetch('/api/publish', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ slug: slug, rename: name }) }).then(function (r) { return r.json(); })
+        .then(function (j) { if (j.error) { toast(j.error); f.querySelector('button[type=submit]').disabled = false; return; } h.textContent = j.title || name; done(); toast('Renamed. The address stays the same.'); },
+          function () { toast('No connection. Please try again.'); f.querySelector('button[type=submit]').disabled = false; });
+    };
+  });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-pub]'); if (!b) return;
+    if (b.dataset.sure !== '1') { b.dataset.sure = '1'; b.textContent = 'Publish for everyone?'; setTimeout(function () { b.dataset.sure = ''; b.textContent = 'Publish'; }, 4000); return; }
+    b.disabled = true; b.textContent = 'Publishing...';
+    fetch('/api/publish', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ slug: b.dataset.pub }) }).then(function (r) { return r.json(); })
+      .then(function (j) { b.disabled = false; b.dataset.sure = ''; b.textContent = 'Publish'; toast(j.error || ((j.note || 'Published.') + ' Address: ' + j.url)); }, function () { b.disabled = false; b.textContent = 'Publish'; toast('No connection. Please try again.'); });
+  });
+})();
+</script>
+</body>
+</html>

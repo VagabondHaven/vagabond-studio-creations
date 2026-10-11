@@ -1,0 +1,18 @@
+{
+  "about": "This site was made with Vagabond Studio. The Studio opens the developer site (/_dev/) with a signed pass; passKey (the live Studio) and passKeys (its developer copy) are the public keys that check it.",
+  "studioUrl": "https://studio.vagabondhaven.com",
+  "passKey": {
+    "kty": "EC",
+    "crv": "P-256",
+    "x": "xu-OfJq8Kiw6VU0IJjZ61jQNzU6uTwE0LuaaZ5YjgbU",
+    "y": "Q0gLuL81lcu7HyLcBScR2JAb1ZBYxx14qGAUYBf6bT4"
+  },
+  "passKeys": [
+    {
+      "kty": "EC",
+      "crv": "P-256",
+      "x": "XwAXM1XvIewx-pVGgST86kxmr7lABZ91hmbI1UBvIlU",
+      "y": "Tv0Gwshpu1eM7sx7RtKl0I2w5lHNcMJgz847Hp0SgE0"
+    }
+  ]
+}

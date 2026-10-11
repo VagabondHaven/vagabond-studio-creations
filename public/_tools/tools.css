@@ -1,0 +1,104 @@
+/* Vagabond Studio comment tool (test site only). Its colours (--cm-*) are set once by comments.js from the site's own
+   colours as built (its brand) and then stay fixed, so the tool never changes while fonts and colours are tried. */
+#cm { display: contents; }
+
+  dialog.cm-modal { position: fixed; inset: 0; margin: auto; z-index: 9000; max-height: calc(100vh - 2em); overflow: auto; box-shadow: 0 0 0 100vmax rgba(20,35,26,.55); }
+  .cm-open { position: fixed; left: 12px; top: calc(50% + 34px); z-index: 9998; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #c9c9c9;
+    background: #fff; color: #222; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,.15); display: flex; align-items: center; justify-content: center; padding: 0; }
+  .cm-open[aria-pressed="true"] { background: var(--cm-dark); color: var(--cm-on-dark); border-color: var(--cm-dark); }
+  .cm-badge { position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; border-radius: 9px; background: var(--cm-accent); color: var(--cm-on-dark); font: 600 11px/18px system-ui, sans-serif; padding: 0 4px; }
+  .cm-bar { position: fixed; left: 12px; bottom: 12px; z-index: 9999; display: flex; gap: 6px; align-items: center;
+    background: var(--cm-dark); color: var(--cm-on-dark); border-radius: 999px; padding: 4px; font: 400 12px/1.2 system-ui, sans-serif; box-shadow: 0 4px 16px rgba(0,0,0,.22); max-width: calc(100vw - 24px); }
+  .cm-bar .cm-bar-t { background: none; color: var(--cm-on-dark); padding: 4px 8px 4px 8px; white-space: nowrap; display: inline-flex; align-items: center; gap: 7px; font: 600 12px system-ui, sans-serif; }
+  .cm-dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.3); }
+  .cm-bar-b { display: inline-flex; gap: 4px; }
+  .cm-bar.cm-mini { opacity: .75; }
+  .cm-bar.cm-mini .cm-bar-b { display: none; }
+  .cm-bar.cm-mini:hover { opacity: 1; }
+  @media (hover: hover) { .cm-bar.cm-mini:hover .cm-bar-b { display: inline-flex; } }
+  .cm-bar[hidden], .cm-pop[hidden], .cm-list[hidden], .cm-hover[hidden] { display: none; }
+  .cm-bar button { background: #fff; color: var(--cm-dark); border: 0; border-radius: 999px; padding: 5px 10px; font: 600 12px system-ui, sans-serif; cursor: pointer; }
+  .cm-on body, .cm-on body * { cursor: crosshair; }
+  .cm-on .cm-ui, .cm-on .cm-ui * { cursor: auto; }
+  .cm-hover { position: absolute; z-index: 9990; pointer-events: none; outline: 2px solid var(--cm-dark); outline-offset: 1px; background: var(--cm-hover); border-radius: 2px; }
+  .cm-hover.drop { outline: 3px dashed var(--cm-accent); background: var(--cm-hover); }
+  .cm-pins { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 9991; }
+  .cm-pin { position: absolute; width: 22px; height: 22px; border-radius: 50% 50% 50% 0; background: var(--cm-accent); color: var(--cm-on-accent); border: 2px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.35);
+    font: 700 11px/18px system-ui, sans-serif; text-align: center; padding: 0; cursor: pointer; }
+  .cm-pin.done { background: #8a8a8a; }
+  .cm-pop, .cm-list { position: fixed; z-index: 10000; background: #fff; color: #222; border: 1px solid #d5d5d5; border-radius: 12px; box-shadow: 0 10px 34px rgba(0,0,0,.25);
+    font: 400 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; text-align: left; letter-spacing: normal; text-transform: none; }
+  .cm-pop { width: 340px; padding: 12px 14px 14px; max-height: 80vh; overflow: auto; }
+  .cm-list { right: 12px; top: 80px; width: 380px; max-height: calc(100vh - 160px); overflow: auto; padding: 12px 14px; }
+  .cm-pop *, .cm-list * { font-family: inherit; letter-spacing: normal; text-transform: none; box-sizing: border-box; }
+  .cm-h { display: flex; align-items: center; gap: 8px; font-weight: 600; margin-bottom: 8px; }
+  .cm-h span { color: #888; font-weight: 400; font-size: 12px; flex: 1; }
+  .cm-x { margin-left: auto; flex: none; width: 30px; height: 30px; border: 0; border-radius: 50%; background: #eef0f3; display: inline-flex; align-items: center; justify-content: center; padding: 0; cursor: pointer; color: #333; }
+  .cm-x svg { display: block; flex: none; }
+  .cm-x:hover { background: #dde1e7; }
+  .cm-list .cm-h { position: sticky; top: -12px; z-index: 1; background: #fff; margin: -12px -14px 8px; padding: 10px 10px 8px 14px; border-bottom: 1px solid #eee; }
+  .cm-pop blockquote, .cm-list blockquote { margin: 0 0 8px; padding: 4px 8px; border-left: 3px solid var(--cm-dark); background: var(--cm-light); color: #333; font-size: 13px; max-height: 90px; overflow: auto; }
+  .cm-thumb { display: block; max-width: 100%; max-height: 140px; border-radius: 6px; margin: 0 0 8px; object-fit: contain; }
+  .cm-text, .cm-name { display: block; width: 100%; border: 1px solid #c9c9c9; border-radius: 6px; padding: 7px 8px; font-size: 14px; color: #222; background: #fff; margin: 0 0 8px; }
+  .cm-note, .cm-sub { font-size: 12px; color: #777; margin: 0 0 6px; }
+  .cm-msg { font-size: 12px; color: #b00020; margin: 6px 0 0; }
+  .cm-msg.ok { color: #1b7a3a; }
+  .cm-msg button { margin-left: 6px; border: 1px solid var(--cm-dark); background: #fff; color: var(--cm-dark); border-radius: 5px; padding: 2px 8px; font-size: 12px; cursor: pointer; }
+  .cm-att { border: 1px dashed #b9b9b9; border-radius: 6px; padding: 6px 8px; margin: 0 0 8px; font-size: 12px; color: #666; }
+  .cm-att.over { border-color: var(--cm-dark); background: var(--cm-light); }
+  .cm-att-pick { color: var(--cm-dark); text-decoration: underline; cursor: pointer; }
+  .cm-name { width: 100%; box-sizing: border-box; font: inherit; font-size: 13px; padding: 5px 8px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 4px; }
+  .cm-att-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .cm-att-list:empty { display: none; }
+  .cm-att-item { position: relative; display: block; }
+  .cm-att-item img { width: 64px; height: 64px; object-fit: cover; border-radius: 5px; display: block; }
+  .cm-att-item button { position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; border-radius: 50%; border: 0; background: #333; color: var(--cm-on-dark); font-size: 12px; line-height: 18px; padding: 0; cursor: pointer; }
+  .cm-acts { display: flex; gap: 8px; }
+  .cm-acts button, .cm-toggle { flex: 1; padding: 8px; border-radius: 6px; border: 1px solid var(--cm-dark); background: var(--cm-dark); color: var(--cm-on-dark); cursor: pointer; font-size: 13px; }
+  .cm-acts .cm-cancel { background: #fff; color: var(--cm-dark); }
+  .cm-editing { outline: 2px dashed var(--cm-accent) !important; outline-offset: 2px; cursor: text !important; }
+  .cm-editing * { cursor: text !important; }
+  .cm-card { border-top: 1px solid #eee; padding: 10px 0; }
+  .cm-card.focus { background: #fff8e5; }
+  .cm-card.done { opacity: .6; }
+  .cm-card p { margin: 0 0 6px; white-space: pre-wrap; }
+  .cm-cardacts { display: flex; gap: 8px; }
+  .cm-cardacts button { flex: 1; }
+  .cm-cardacts .cm-edit { margin: 0; text-align: center; border-style: solid; background: #fff; padding: 4px 10px; font-size: 12px; }
+  .cm-edit { padding: 8px; border-radius: 6px; border: 1px solid var(--cm-dark); background: #fff; color: var(--cm-dark); cursor: pointer; font-size: 13px; }
+  .cm-body textarea { width: 100%; box-sizing: border-box; font: inherit; font-size: 13px; padding: 6px 8px; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 6px; }
+  .cm-meta { font-size: 12px; color: #666; margin-bottom: 4px; }
+  .cm-meta a { color: var(--cm-dark); }
+  .cm-newtext { background: #fff4f3; border-left: 3px solid var(--cm-accent); padding: 4px 8px; }
+  .cm-toggle { flex: none; padding: 4px 10px; font-size: 12px; background: #fff; color: var(--cm-dark); }
+  .cm-allhere { display: block; width: 100%; margin: 4px 0 2px; padding: 8px; border-radius: 6px; border: 1px solid var(--cm-dark); background: #fff; color: var(--cm-dark); cursor: pointer; font-size: 13px; }
+  .cm-bar-b { flex-wrap: wrap; }
+  @media (max-width: 639px) {
+    .cm-bar { border-radius: 18px; }
+    .cm-open { top: auto; bottom: 200px; left: 10px; width: 40px; height: 40px; }
+    .cm-bar { bottom: 66px; left: 10px; }
+    .cm-pop { left: 0 !important; right: 0; bottom: 0; top: auto !important; width: auto; border-radius: 14px 14px 0 0; max-height: 75vh; }
+    .cm-list { left: 0; right: 0; top: auto; bottom: 0; width: auto; border-radius: 14px 14px 0 0; max-height: 75vh; }
+  }
+
+
+/* Vagabond Studio additions */
+.cm-cedit { padding: 4px 10px; font-size: 12px; border-radius: 6px; border: 1px solid var(--cm-dark); background: #fff; color: var(--cm-dark); cursor: pointer; flex: none; }
+.cm-cardacts { justify-content: flex-start; }
+.cm-cardacts .cm-toggle { flex: none; }
+.cm-design { background: var(--cm-light); border-left: 3px solid var(--cm-accent); padding: 4px 8px; font-weight: 600; }
+.cm-reply { color: #1b6b3a; }
+.cm-pin.done { background: #8a8a8a; }
+
+  /* Replace a picture right away (only on sites that offer window.VSSwap) */
+  .cm-swap { display: grid; gap: 4px; margin: 0 0 8px; }
+  .cm-swap-btn { display: block; text-align: center; padding: 8px; border-radius: 6px; background: var(--cm-accent); color: var(--cm-on-accent); cursor: pointer; font: 600 13px system-ui, sans-serif; }
+  .cm-swap .cm-note { margin: 0; }
+  .cm-swap.over .cm-swap-btn { outline: 2px dashed var(--cm-accent); outline-offset: 3px; }
+  .cm-on img.cm-drop-target { outline: 3px dashed var(--cm-accent); outline-offset: -3px; }
+  .cm-toast { position: fixed; left: 50%; bottom: 70px; transform: translateX(-50%); z-index: 10000; background: var(--cm-dark); color: var(--cm-on-dark);
+    padding: 10px 16px; border-radius: 10px; font: 500 13px/1.4 system-ui, sans-serif; box-shadow: 0 4px 16px rgba(0,0,0,.25); max-width: calc(100vw - 32px); }
+
+  /* Space between "Edit the text on the page" and the Save buttons */
+  .cm-pop > .cm-edit { display: block; width: 100%; margin: 2px 0 12px; }
+  .cm-pop > .cm-edit-note { margin: 0 0 12px; }
